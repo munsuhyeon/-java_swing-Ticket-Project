@@ -464,9 +464,19 @@ public class BuyTicket extends JDialog {
 				}
 			}
 		});*/
-		/*btnNewButton.addActionListener(new ActionListener() {
+		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "선택한 날짜 : " + textArea.getText() +
+				
+				ArrayList<String> seatlist = new ArrayList<String>();
+				String seat_num = (textArea_1.getText().replaceAll("[^0-9]",","));//숫자만 출력
+				seat_num = seat_num.replace(",,,,,", " ");//콤마5개 1개로 바꾸기
+				seat_num = seat_num.substring(0, seat_num.length()-4);//마지막콤마 제거
+				seatlist.add(seat_num);
+				for(int i = 0; i<seatlist.size(); i++) {
+					String num = seatlist.get(i);
+					System.out.println(num + "   ");
+				}
+				/*JOptionPane.showMessageDialog(null, "선택한 날짜 : " + textArea.getText() +
 						"\n" + textArea_1.getText() + "\n구매하시겠습니까?");
 				String pdate = textArea.getText();
 				String title = lbltitle.getText();
@@ -490,15 +500,18 @@ public class BuyTicket extends JDialog {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				String sql = "select * from purchaselist where ID ='" + id + "'TITLE='" + title +
-						 "'SEATS='" + btn + "'and PDATE='" +pdate+"'";
+				for(int i = 0; i<seatlist.size(); i++) {
+					String sql = "select * from purchaselist where ID ='" + id + "'TITLE='" + title +
+							 "'SEATS='" + seatlist.get(i) + "'and PDATE='" +pdate+"'";	
+				System.out.println(sql);
+				
 				try {
 					rs = stmt.executeQuery(sql);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+				}
 				JOptionPane.showMessageDialog(null, "구매가 완료되었습니다");
 				dispose();
 				Home home;
@@ -508,9 +521,10 @@ public class BuyTicket extends JDialog {
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}*/
+            	
 			}
-		});*/
+		});
 		btnNewButton.setBounds(1148, 403, 129, 92);
 		
 		panel.add(btnNewButton);
@@ -519,7 +533,6 @@ public class BuyTicket extends JDialog {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
                 showtextArea();
             }
 		};
@@ -560,11 +573,6 @@ public class BuyTicket extends JDialog {
 			s = s.substring(0, s.length()-1);
 		}
 		textArea_1.setText(s);
-		ArrayList<String> list = new ArrayList<String>();
-		
-		String seat_num = s.replaceAll("[^0-9]", "");
-		list.add(seat_num);	
-		System.out.println(list);
 	}	
 	
 	private void ShowCalendar() {
