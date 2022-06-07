@@ -102,7 +102,7 @@ public class Login extends JDialog {
 						dispose();
 						Home home;
 						try {
-							home = new Home();
+							home = new Home(id);
 							home.setVisible(true);
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block

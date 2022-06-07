@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -25,8 +28,6 @@ public class BuyTicket extends JDialog {
 	private final JPanel infopanel = new JPanel();
 	private final JLabel lblNewLabel = new JLabel("STAGE");
 	private final JPanel setas_panel = new JPanel();
-	private final JButton btnBuy = new JButton("예매하기");
-	private final JPanel panel_2 = new JPanel();
 	private final JPanel panel_4 = new JPanel();
 	private final JPanel panelCal = new JPanel();
 	private final JButton btnMonthPrevious = new JButton("<");
@@ -40,14 +41,20 @@ public class BuyTicket extends JDialog {
 	String mDate = "";
 	int year, month, day;
 	private final JLabel lbldate = new JLabel("New label");
+	private final JPanel infopanel_1 = new JPanel();
+	private final JButton btnNewButton = new JButton("구매하기");
+	private final JLabel lblNewLabel_1 = new JLabel("선택한 좌석");
+	private final JLabel lblNewLabel_2 = new JLabel("선택한 날짜");
 	private final JTextArea textArea = new JTextArea();
-	
+	private final JTextArea textArea_1 = new JTextArea();
+	private Statement stmt;
+	private ResultSet rs;
 	
 	public String getMDate() {
 		return mDate;
 	}
-	public BuyTicket(String title, String date) {
-		setTitle("티켓 예매하기");
+	public BuyTicket(String title, String date, String id) {
+		setTitle(id+"님");
 		setBounds(100, 100, 1300, 584);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -393,25 +400,126 @@ public class BuyTicket extends JDialog {
 		seatpanel.add(setas_panel, BorderLayout.CENTER);
 		setas_panel.setLayout(new GridLayout(10, 10, 5, 5));
 		////
-		infopanel.setBounds(1148, 25, 129, 470);
+		infopanel.setBounds(1148, 25, 129, 171);
 		
 		panel.add(infopanel);
 		infopanel.setLayout(new BorderLayout(0, 0));
 		
-		infopanel.add(btnBuy, BorderLayout.SOUTH);
-		
-		infopanel.add(panel_2, BorderLayout.NORTH);
-		textArea.setWrapStyleWord(true);
-		textArea.setLineWrap(true);
-		textArea.setEditable(false);
-		textArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
+		infopanel.add(lblNewLabel_2, BorderLayout.NORTH);
 		
 		infopanel.add(textArea, BorderLayout.CENTER);
+		infopanel_1.setBounds(1148, 222, 129, 171);
+		
+		panel.add(infopanel_1);
+		infopanel_1.setLayout(new BorderLayout(0, 0));
+		
+		infopanel_1.add(lblNewLabel_1, BorderLayout.NORTH);
+		
+		infopanel_1.add(textArea_1, BorderLayout.CENTER);
+		/*btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "선택한 날짜 : " + textArea.getText() +
+						"\n" + textArea_1.getText() + "\n구매하시겠습니까?");
+				String pdate = textArea.getText();
+				String title = lbltitle.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String temp = "jdbc:mysql://localhost/show_ticket?user=root&password=1234";
+				Connection con = null;
+				try {
+					con = DriverManager.getConnection(temp);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					stmt =  con.createStatement();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String sql = "select * from purchaselist where TITLE ='" + title + 
+						"'and PDATE='" +pdate+ "'and ID='" +  + '";
+				System.out.println(sql);
+				try {
+					rs = stmt.executeQuery(sql);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				JOptionPane.showMessageDialog(null, "구매가 완료되었습니다");
+				dispose();
+				Home home;
+				try {
+					home = new Home();
+					home.setVisible(true);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});*/
+		/*btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "선택한 날짜 : " + textArea.getText() +
+						"\n" + textArea_1.getText() + "\n구매하시겠습니까?");
+				String pdate = textArea.getText();
+				String title = lbltitle.getText();
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String temp = "jdbc:mysql://localhost/show_ticket?user=root&password=1234";
+				Connection con = null;
+				try {
+					con = DriverManager.getConnection(temp);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					stmt =  con.createStatement();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				String sql = "select * from purchaselist where ID ='" + id + "'TITLE='" + title +
+						 "'SEATS='" + btn + "'and PDATE='" +pdate+"'";
+				try {
+					rs = stmt.executeQuery(sql);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				JOptionPane.showMessageDialog(null, "구매가 완료되었습니다");
+				dispose();
+				Home home;
+				try {
+					home = new Home(id);
+					home.setVisible(true);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});*/
+		btnNewButton.setBounds(1148, 403, 129, 92);
+		
+		panel.add(btnNewButton);
 		
 		ActionListener seatSelectionListener = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+            	
                 showtextArea();
             }
 		};
@@ -419,6 +527,7 @@ public class BuyTicket extends JDialog {
             	JToggleButton btn = new JToggleButton(Integer.toString(i+1));
             	btn.addActionListener(seatSelectionListener);
             	seats[i] = btn;
+            	btn.setBackground(Color.PINK);
             	setas_panel.add(btn);
             }
 			}//BuyTicket
@@ -437,23 +546,25 @@ public class BuyTicket extends JDialog {
 		});
 		}*/
 		
-		
-	
-	
 	private void showtextArea() {
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<seats.length; i++) {
 			JToggleButton btn = seats[i];
 			if(btn.isSelected()) {
 				sb.append(btn.getText());
-				sb.append("번 좌석\r ");
+				sb.append("번 좌석\n");
 			}
 		}
 		String s = sb.toString();
 		if(s.length()>0) {
-			s = s.substring(0, s.length()-2);
+			s = s.substring(0, s.length()-1);
 		}
-		textArea.setText(s);
+		textArea_1.setText(s);
+		ArrayList<String> list = new ArrayList<String>();
+		
+		String seat_num = s.replaceAll("[^0-9]", "");
+		list.add(seat_num);	
+		System.out.println(list);
 	}	
 	
 	private void ShowCalendar() {
@@ -538,11 +649,11 @@ public class BuyTicket extends JDialog {
 					String month = txtMonth.getText();
 					String day = btn1.getText();							
 					mDate = year + "-" + month + "-" + day;
-					setVisible(false);
+					setVisible(true);
+					textArea.setText(mDate);
 				}
 			});
 		}
 		
 	}	
 	}
-

@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -11,6 +12,7 @@ import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -33,8 +35,10 @@ public class Home extends JDialog {
 	private final JTextField textField = new JTextField();
 	private final JScrollPane scrollPane = new JScrollPane();
 	private final JTable table;
+	private final JLabel userid = new JLabel("userid");
 	
-	public Home() throws Exception {
+	public Home(String id) throws Exception {
+		textField.setText("검색어 입력");
 		textField.setColumns(10);
 		setBounds(100, 100, 793, 696);
 		getContentPane().setLayout(new BorderLayout());
@@ -52,6 +56,10 @@ public class Home extends JDialog {
 		toolBar.add(btnNewButton_2);
 		
 		toolBar.add(btnNewButton_3);
+		userid.setForeground(Color.BLUE);
+		
+		toolBar.add(userid);
+		userid.setText(id+"님 환영합니다");
 		
 		toolBar.add(textField);
 		
@@ -112,7 +120,7 @@ public class Home extends JDialog {
 				String price = table.getValueAt(row,5).toString();
 				String pic = table.getValueAt(row,9).toString();
 				
-				ShowInfo dlg = new ShowInfo(title,place,date,time,price,pic);
+				ShowInfo dlg = new ShowInfo(title,place,date,time,price,pic,id);
 				dlg.setModal(true);
 				dlg.setVisible(true);
 			}

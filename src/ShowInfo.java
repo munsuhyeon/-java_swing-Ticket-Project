@@ -26,7 +26,8 @@ public class ShowInfo extends JDialog {
 	private final JLabel lblprice = new JLabel("가격");
 	private final JButton btnbuy = new JButton("예매하기");
 	
-	public ShowInfo(String title,String place,String date,String time,String price, String Pic) {
+	public ShowInfo(String title,String place,String date,String time,String price, String Pic, String id) {
+		setTitle(id+"님");
 		setBounds(100, 100, 718, 549);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,7 +88,7 @@ public class ShowInfo extends JDialog {
 			contentPanel.add(lblprice);
 			btnbuy.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					BuyTicket dlg = new BuyTicket(title,date);
+					BuyTicket dlg = new BuyTicket(title,date,id);
 					dlg.setModal(true);
 					dlg.setVisible(true);
 					dispose();
